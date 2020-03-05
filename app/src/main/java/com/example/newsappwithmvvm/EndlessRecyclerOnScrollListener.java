@@ -3,11 +3,12 @@ package com.example.newsappwithmvvm;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
     private int previousTotal = 0;
     private boolean loading = true;
     private int visibleThreshold;
-    private int firstVisibleItem, visibleItemCount, totalItemCount;
     private RecyclerView.LayoutManager layoutManager;
 
     public EndlessRecyclerOnScrollListener(RecyclerView.LayoutManager layoutManager, int visibleThreshold) {
@@ -16,12 +17,12 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     }
 
     @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        visibleItemCount = recyclerView.getChildCount();
-        totalItemCount = layoutManager.getItemCount();
-        firstVisibleItem = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+        int visibleItemCount = recyclerView.getChildCount();
+        int totalItemCount = layoutManager.getItemCount();
+        int firstVisibleItem = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
 
         if (loading) {
             if (totalItemCount > previousTotal) {
